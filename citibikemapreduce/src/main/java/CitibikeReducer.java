@@ -5,17 +5,28 @@ import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 public class CitibikeReducer
-    extends Reducer<Text, IntWritable, Text, IntWritable> 
+    extends Reducer<Text, IntWritable, Text, Text> 
     {
     @Override
         public void reduce(Text key, Iterable<IntWritable> values, Context context)
         throws IOException, InterruptedException 
         {
-            int maxValue = Integer.MIN_VALUE;
+            int count = 0;
+            double average = 0;
+            double cumulative = 0;
+            Text newValue;
             for (IntWritable value : values) 
             {
-                maxValue = Math.max(maxValue, value.get());
+                count++;
+                cumulative = cumulative + value.get();
+                average = cumulative/count;
             }
-            context.write(key, new IntWritable(maxValue));
+
+            if(count > 9)
+            {
+                newValue = String.valueOf(count)+","+String.valueOf(average);
+                context.write(key, new Text(newValue));
+            }
+                else {}
         }
     } 
