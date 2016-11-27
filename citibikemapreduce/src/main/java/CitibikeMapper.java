@@ -1,27 +1,35 @@
-// cc MaxTemperatureMapper Mapper for maximum temperature example
-// vv MaxTemperatureMapper
+// cc CitibikeMapper for creating key/value pair to measure trip lengths.
+// vv CitibikeMapper
 import java.io.IOException;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
-public class MaxTemperatureMapper
- extends Mapper<LongWritable, Text, Text, IntWritable> {
- private static final int MISSING = 9999;
- @Override
- public void map(LongWritable key, Text value, Context context)
- throws IOException, InterruptedException {
- String line = value.toString();
- String year = line.substring(15, 19);
- int airTemperature;
- if (line.charAt(87) == '+') { // parseInt doesn't like leading plus signs
- airTemperature = Integer.parseInt(line.substring(88, 92));
- } else {
- airTemperature = Integer.parseInt(line.substring(87, 92));
- }
- String quality = line.substring(92, 93);
- if (airTemperature != MISSING && quality.matches("[01459]")) {
- context.write(new Text(year), new IntWritable(airTemperature));
- }
- }
+public class CitibikeMapper
+    extends Mapper<LongWritable, Text, Text, IntWritable> 
+    {
+    @Override
+        public void map(LongWritable key, Text value, Context context)
+        throws IOException, InterruptedException 
+        {
+            String line = value.toString();
+    
+            CSVReader R = new CSVReader(new StringReader(line));
+
+            String[] ParsedLine = R.readNext();
+            R.close();
+
+            String date;
+            String origin;
+            int triplength;
+
+
+            date = ParsedLine[1].substring(0, 10);
+            origin = ParsedLine[3]+","+ParsedLine[7]+","+date);
+            triplength = Integer.parseInt(ParsedLine[0]);
+
+            context.write(new Text(origin), new IntWritable(triplength));
+        }
+    }
 }
+

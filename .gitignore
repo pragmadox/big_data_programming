@@ -46,6 +46,7 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
+# Custom Exceptions.
 2013*
 2014*
 *.csv
