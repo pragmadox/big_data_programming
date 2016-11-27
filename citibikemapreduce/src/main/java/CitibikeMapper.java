@@ -8,22 +8,23 @@ import org.apache.hadoop.mapreduce.Mapper;
 public class CitibikeMapper
     extends Mapper<LongWritable, Text, Text, IntWritable> 
     {
-    @Override
-        public void map(LongWritable key, IntWritable value, Context context)
+        @Override
+        public void map(LongWritable key, Text value, Context context)
         throws IOException, InterruptedException 
         {
             String line = value.toString();
-            comma = ",";
-            String[] ParsedLine = value.split(comma);
+            line = line.replace("\"","");
+            String comma = ",";
+            String[] ParsedLine = line.split(comma);
             
             if(ParsedLine.length == 15)
             {
                 String date;
                 String origin;
-                String triplength;
+                int triplength;
 
                 date = ParsedLine[1].substring(0, 10);
-                origin = ParsedLine[3]+","+ParsedLine[7]+","+date);
+                origin = ParsedLine[3]+","+ParsedLine[7]+","+date;
                 triplength = Integer.parseInt(ParsedLine[0]);
                 context.write(new Text(origin), new IntWritable(triplength));
             }
