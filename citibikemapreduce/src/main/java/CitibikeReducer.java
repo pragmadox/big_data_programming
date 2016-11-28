@@ -13,18 +13,20 @@ public class CitibikeReducer
         {
             int count = 0;
             double average = 0;
+            long meanValue = 0;
             double cumulative = 0;
-            Text newValue;
+            String newValue;
             for (IntWritable value : values) 
             {
                 count++;
                 cumulative = cumulative + value.get();
                 average = cumulative/count;
+                meanValue = Math.round(average);
             }
 
-            if(count > 9)
+            if(count > 0)
             {
-                newValue = String.valueOf(count)+","+String.valueOf(average);
+                newValue = String.valueOf(count)+","+String.valueOf(meanValue);
                 context.write(key, new Text(newValue));
             }
                 else {}

@@ -6,7 +6,7 @@ maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
  <groupId>com.jxprice</groupId>
  <artifactId>Citibike</artifactId>
  <version>1.0</version>
- <name>maximumtemp</name>
+ <name>Citibikemeantriplength</name>
  <url>http://maven.apache.org</url>
  <dependencies>
     <dependency>
