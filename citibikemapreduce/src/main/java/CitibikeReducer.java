@@ -24,9 +24,9 @@ public class CitibikeReducer
                 meanValue = Math.round(average);
             }
 
-            if(count > 0)
+            if(count > 5)
             {
-                newValue = String.valueOf(count)+","+String.valueOf(meanValue);
+                newValue = ","+String.valueOf(count)+","+String.valueOf(meanValue);
                 context.write(key, new Text(newValue));
             }
                 else {}
