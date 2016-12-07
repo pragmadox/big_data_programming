@@ -1,0 +1,5 @@
+#!bin/bash
+
+wget https://s3.amazonaws.com/tripdata/201501-citibike-tripdata.zip
+
+https://s3.amazonaws.com/tripdata/201501-citibike-tripdata.zip

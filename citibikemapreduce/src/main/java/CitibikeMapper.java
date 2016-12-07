@@ -17,12 +17,12 @@ public class CitibikeMapper
             String comma = ",";
             String[] ParsedLine = line.split(comma);
             String[] dateTime = ParsedLine[1].split(" ");
-            String[] date = dateTime[0].split("/");
+            String[] date = dateTime[0].split("-");
             if(date.length == 3)
             {    
-                String month = date[0];
-                String day = date[1];
-                String year = date[2];
+                String year = date[0];
+                String month = date[1];
+                String day = date[2];
                 //Standardize the length of the month and day
                 if(month.length()==1)
                 {
